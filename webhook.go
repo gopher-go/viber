@@ -5,14 +5,25 @@ import "encoding/json"
 //
 //https://chatapi.viber.com/pa/set_webhook
 // {
-//    "url": "https://my.host.com",
-//    "event_types": ["delivered", "seen", "failed", "subscribed", "unsubscribed", "conversation_started"]
-// }
+//   "url":"https://my.host.com",
+//   "event_types":[
+//      "delivered",
+//      "seen",
+//      "failed",
+//      "subscribed",
+//      "unsubscribed",
+//      "conversation_started"
+//   ],
+//   "send_name": true,
+//   "send_photo": true
+//}
 
 // WebhookReq request
 type WebhookReq struct {
 	URL        string   `json:"url"`
 	EventTypes []string `json:"event_types"`
+	SendName   bool     `json:"send_name"`
+	SendPhoto  bool     `json:"send_photo"`
 }
 
 // {
