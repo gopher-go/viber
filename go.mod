@@ -1,3 +1,3 @@
-module github.com/andrewkav/viber/v1
+module github.com/andrewkav/viber
 
 go 1.14
