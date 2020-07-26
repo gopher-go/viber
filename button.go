@@ -2,22 +2,42 @@ package viber
 
 // Button for carousel and keyboards
 type Button struct {
-	Columns             int        `json:"Columns"`
-	Rows                int        `json:"Rows"`
-	ActionType          ActionType `json:"ActionType"`
-	ActionBody          string     `json:"ActionBody"`
-	Image               string     `json:"Image,omitempty"`
-	Text                string     `json:"Text,omitempty"`
-	TextSize            TextSize   `json:"TextSize,omitempty"`
-	TextVAlign          TextVAlign `json:"TextVAlign,omitempty"`
-	TextHAlign          TextHAlign `json:"TextHAlign,omitempty"`
-	TextOpacity         int8       `json:"TextOpacity,omitempty"`
-	TextBgGradientColor string     `json:"TextBgGradientColor,omitempty"`
-	BgColor             string     `json:"BgColor,omitempty"`
-	BgMediaType         string     `json:"BgMediaType,omitempty"`
-	BgMedia             string     `json:"BgMedia,omitempty"`
-	BgLoop              bool       `json:"BgLoop,omitempty"`
-	Silent              bool       `json:"Silent,omitempty"`
+	Columns             int          `json:"Columns"`
+	Rows                int          `json:"Rows"`
+	ActionType          ActionType   `json:"ActionType"`
+	ActionBody          string       `json:"ActionBody"`
+	Image               string       `json:"Image,omitempty"`
+	Text                string       `json:"Text,omitempty"`
+	TextSize            TextSize     `json:"TextSize,omitempty"`
+	Frame               *ButtonFrame `json:"Frame,omitempty"`
+	TextVAlign          TextVAlign   `json:"TextVAlign,omitempty"`
+	TextHAlign          TextHAlign   `json:"TextHAlign,omitempty"`
+	TextOpacity         int8         `json:"TextOpacity,omitempty"`
+	TextBgGradientColor string       `json:"TextBgGradientColor,omitempty"`
+	BgColor             string       `json:"BgColor,omitempty"`
+	BgMediaType         string       `json:"BgMediaType,omitempty"`
+	BgMedia             string       `json:"BgMedia,omitempty"`
+	BgLoop              bool         `json:"BgLoop,omitempty"`
+	Silent              bool         `json:"Silent,omitempty"`
+}
+
+// ButtonFrame - Draw frame above the background on the button, the size will be equal the size of the button
+type ButtonFrame struct {
+	// BorderWidth optional (api level 6). Width of border. Default 1
+	BorderWidth *int `json:"BorderWidth,omitempty"`
+	// BorderColor optional (api level 6). Color of border. Default #000000
+	BorderColor *string `json:"BorderColor,omitempty"`
+	// CornerRadius optional (api level 6). The border will be drawn with rounded corners. Default 0
+	CornerRadius *int `json:"CornerRadius"`
+}
+
+// NewButtonFrame helper function to create button frame
+func NewButtonFrame(borderWidth int, borderColor string, cornerRadius int) *ButtonFrame {
+	return &ButtonFrame{
+		BorderWidth:  &borderWidth,
+		BorderColor:  &borderColor,
+		CornerRadius: &cornerRadius,
+	}
 }
 
 // NewButton helper function for creating button with text and image
