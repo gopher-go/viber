@@ -29,6 +29,15 @@ type Message interface {
 	SetKeyboard(k *Keyboard)
 }
 
+// BroadcastMessage for Viber
+type BroadcastMessage struct {
+	Sender        Sender      `json:"sender"`
+	BroadCastList []string    `json:"broadcast_list,omitempty"`
+	Type          MessageType `json:"type"`
+	MinAPIVersion uint        `json:"min_api_version,omitempty"`
+	Text          string      `json:"text"`
+}
+
 // TextMessage for Viber
 type TextMessage struct {
 	Receiver      string      `json:"receiver,omitempty"`
@@ -115,6 +124,16 @@ func (v *Viber) NewTextMessage(msg string) *TextMessage {
 	}
 }
 
+// NewTextMessage viber
+func (v *Viber) NewTextBroadcastMessage(msg string, to []string) *BroadcastMessage {
+	return &BroadcastMessage{
+		Sender:        v.Sender,
+		Type:          TypeTextMessage,
+		BroadCastList: to,
+		Text:          msg,
+	}
+}
+
 // NewURLMessage creates new message with global sender and common params set
 func (v *Viber) NewURLMessage(msg string, url string) *URLMessage {
 	return &URLMessage{
@@ -166,6 +185,12 @@ func (v *Viber) SendPublicMessage(from string, m Message) (msgToken uint64, err 
 func (v *Viber) SendMessage(to string, m Message) (msgToken uint64, err error) {
 	m.SetReceiver(to)
 	return v.sendMessage("https://chatapi.viber.com/pa/send_message", m)
+}
+
+// SendBroadcastTextMessage to receiver
+func (v *Viber) SendBroadcastTextMessage(to []string, m string) (msgToken uint64, err error) {
+	bm := v.NewTextBroadcastMessage(m, to)
+	return v.sendMessage("https://chatapi.viber.com/pa/broadcast_message", bm)
 }
 
 // SetReceiver for text message
